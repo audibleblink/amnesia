@@ -2,26 +2,35 @@ package main
 
 import (
 	"crypto/rand"
+	"fmt"
 	"io"
-	"log"
 
 	"github.com/shirou/gopsutil/mem"
 )
 
-var times = 3
+var (
+	times     = 3
+	writeSize = uint64(1)
+)
 
 func main() {
-	v, _ := mem.VirtualMemory()
-
+	totalMem, _ := mem.VirtualMemory()
+	maxMemWrite := totalMem.Available / 2
 	for times > 0 {
-		bytesToFill := v.Available / 2
-		log.Println("Filling: ", bytesToFill)
-		vessel := make([]byte, bytesToFill)
-		_, err := io.ReadFull(rand.Reader, vessel)
-		if err != nil {
-			log.Fatal(err)
+		for writeSize <= maxMemWrite {
+			overwriteBytes(writeSize)
+			writeSize = writeSize * 2
 		}
-
+		writeSize = uint64(1)
 		times--
+	}
+}
+
+func overwriteBytes(bytesToFill uint64) {
+	fmt.Printf("%d", bytesToFill)
+	vessel := make([]byte, bytesToFill)
+	_, err := io.ReadFull(rand.Reader, vessel)
+	if err != nil {
+		return
 	}
 }
