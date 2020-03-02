@@ -1,11 +1,13 @@
 .PHONY: windows linux darwin
 
-# FLAGS=-ldflags "-s -w -buildid= "
-FLAGS=-ldflags="-s -w -buildid=" -gcflags=-trimpath=${HOME} -asmflags=-trimpath=${HOME}
+FLAGS=-ldflags="-s -w -buildid=" -trimpath
 BUILD=go build -a
 OUT=bin
 
 all: windows linux darwin
+
+clean: 
+	rm -rf ${OUT}
 
 windows:
 	$(eval GOOS=windows)

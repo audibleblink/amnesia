@@ -29,8 +29,5 @@ func main() {
 func overwriteBytes(bytesToFill uint64) {
 	fmt.Printf("%d", bytesToFill)
 	vessel := make([]byte, bytesToFill)
-	_, err := io.ReadFull(rand.Reader, vessel)
-	if err != nil {
-		return
-	}
+	io.ReadFull(rand.Reader, vessel)
 }
