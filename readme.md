@@ -1,6 +1,6 @@
 # Amnesia
 
-Takes unallocated memory and fills it with junk to mess with tools like Encase and Volatility.
+Takes unallocated memory and fills it with junk to mess with forensics tools.
 
 
 ## Building
