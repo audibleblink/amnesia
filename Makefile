@@ -1,20 +1,24 @@
 .PHONY: all clean release
 
 APP=amnesia
-OUT=release
-FLAGS=-trimpath -ldflags="-s -w -buildid="
+OUT=bin
+
+GARBLE=${GOPATH}/bin/garble
+BUILD=garble -tiny build
 
 PLATFORMS = linux windows darwin
 os = $(word 1, $@)
 
 all: ${PLATFORMS}
 
-${PLATFORMS}:
-	GOOS=${os} \
-	     go build ${FLAGS} -o ${OUT}/${APP}-${os}
+${PLATFORMS} $(GARBLE):
+	GOOS=${os} ${BUILD} -o ${OUT}/${APP}-${os}
 
 release: all
-	@tar -czvf ${OUT}.tar.gz ${OUT}
+	@tar -czvf ${APP}.tar.gz ${OUT}
 
 clean: 
 	rm -rf ${OUT}*
+
+$(GARBLE):
+	go get mvdan.cc/garble
