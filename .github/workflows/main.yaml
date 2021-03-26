@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Build
-        uses: audibleblink/golang-action@1.5.3
+        uses: audibleblink/golang-action@1.5.4
         with:
           args: make release
 
