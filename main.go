@@ -16,7 +16,7 @@ var (
 func main() {
 	totalMem, _ := mem.VirtualMemory()
 	maxMemWrite := totalMem.Available / 2
-	setTimes := flag.Int("n", 3, "integer, please")
+	setTimes := flag.Int("n", 1, "integer, please")
 	flag.Parse()
 	for *setTimes > 0 {
 		for writeSize <= maxMemWrite {
