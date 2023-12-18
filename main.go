@@ -9,23 +9,26 @@ import (
 )
 
 var (
-	//times     = 3
+	timesVar int 
 	writeSize = uint64(1)
 )
 
 func main() {
 	totalMem, _ := mem.VirtualMemory()
 	maxMemWrite := totalMem.Available / 2
-	setTimes := flag.Int("n", 1, "integer, please")
 	flag.Parse()
-	for *setTimes > 0 {
+	for timesVar > 0 {
 		for writeSize <= maxMemWrite {
 			overwriteBytes(writeSize)
 			writeSize = writeSize * 2
 		}
 		writeSize = uint64(1)
-		*setTimes--
+		timesVar--
 	}
+}
+
+func init() {
+	flag.IntVar(&timesVar,"n", 1, "integer, please")
 }
 
 func overwriteBytes(bytesToFill uint64) {
@@ -33,3 +36,4 @@ func overwriteBytes(bytesToFill uint64) {
 	vessel := make([]byte, bytesToFill)
 	io.ReadFull(rand.Reader, vessel)
 }
+
